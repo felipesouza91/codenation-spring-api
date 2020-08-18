@@ -9,5 +9,7 @@ public class UserSystemDTO {
 
   private Long id;
 
+  private String name;
+
   private String username;
 }
