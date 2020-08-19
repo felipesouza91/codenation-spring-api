@@ -1,12 +1,9 @@
 package br.com.felipe.codenationlog.domain.service;
 
-import java.util.List;
-
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -21,8 +18,8 @@ public class EventService {
   private EventRepository eventRepository;
 
   public Page<Event> findAll(Pageable pageable, EventFilter filter) {
-    List<Event> list = eventRepository.findAll();
-    return new PageImpl<>(list);
+
+    return eventRepository.findAll(pageable, filter);
   }
 
   public Event findById(Long id) {

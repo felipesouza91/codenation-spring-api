@@ -1,9 +1,12 @@
 package br.com.felipe.codenationlog.api.controller;
 
+import java.util.List;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import br.com.felipe.codenationlog.api.dto.converter.EventDtoManager;
 import br.com.felipe.codenationlog.api.dto.input.EventInput;
 import br.com.felipe.codenationlog.api.dto.model.EventDTO;
+import br.com.felipe.codenationlog.api.dto.model.EventResumeDTO;
 import br.com.felipe.codenationlog.domain.model.Event;
 import br.com.felipe.codenationlog.domain.service.EventService;
 import br.com.felipe.codenationlog.infra.filters.EventFilter;
@@ -34,8 +38,10 @@ public class EventController {
 
   @GetMapping
   @ResponseStatus(value = HttpStatus.OK)
-  public Page<Event> findAll(Pageable pageable, EventFilter filter) {
-    return eventService.findAll(pageable, filter);
+  public Page<EventResumeDTO> findAll(Pageable pageable, EventFilter filter) {
+    Page<Event> pageEvent = eventService.findAll(pageable, filter);
+    List<EventResumeDTO> eventDtoList = dtoManager.toCollectionModelResume(pageEvent.getContent());
+    return new PageImpl<>(eventDtoList, pageEvent.getPageable(), pageEvent.getTotalElements());
   }
 
   @GetMapping("/{id}")
