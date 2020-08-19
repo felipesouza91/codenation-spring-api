@@ -23,6 +23,7 @@ public class EventInput {
   private String eventLog;
 
   @Valid
+  @NotNull
   private UserSystemInputId origin;
 
   @NotNull
