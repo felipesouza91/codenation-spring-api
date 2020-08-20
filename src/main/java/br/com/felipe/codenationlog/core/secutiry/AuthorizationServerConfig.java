@@ -36,7 +36,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
   public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
 
     clients.inMemory().withClient("api").secret(password.encode("api")).scopes("read", "write")
-        .authorizedGrantTypes("password", "refresh_token").accessTokenValiditySeconds(1800)
+        .authorizedGrantTypes("password").accessTokenValiditySeconds(1800)
         .refreshTokenValiditySeconds(3600 * 12).and().withClient("checktoken").secret(password.encode("check123"));
 
   }

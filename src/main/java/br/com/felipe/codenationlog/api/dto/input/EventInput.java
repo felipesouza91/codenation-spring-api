@@ -1,6 +1,5 @@
 package br.com.felipe.codenationlog.api.dto.input;
 
-import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 

@@ -17,6 +17,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.query.QueryUtils;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.util.StringUtils;
 
 import br.com.felipe.codenationlog.domain.model.Event;
@@ -46,7 +48,11 @@ public class EventRepositoryQueryImpl implements EventRepositoryQuery {
   }
 
   private Predicate[] criarRestricoes(EventFilter filter, CriteriaBuilder builder, Root<Event> root) {
+    Long id = ((Jwt) SecurityContextHolder.getContext()
+      .getAuthentication().getPrincipal()).getClaim("usuario_id");
     List<Predicate> predicates = new ArrayList<>();
+    predicates.add(builder.equal(root.get("origin").get("id"),
+    id));
     if (!StringUtils.isEmpty(filter.getEventDescription())) {
       predicates.add(builder.like(builder.lower(root.get("eventDescription")),
           "%" + filter.getEventDescription().toLowerCase() + "%"));

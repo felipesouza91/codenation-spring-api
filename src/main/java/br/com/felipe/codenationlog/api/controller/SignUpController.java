@@ -12,6 +12,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,11 +34,17 @@ public class SignUpController {
 
   @PostMapping
   @ResponseStatus(value = HttpStatus.CREATED)
-  public UserSystemDTO create(@RequestBody @Valid UserSystemInput user) {
+  public ResponseEntity<UserSystemDTO> create(@RequestBody @Valid UserSystemInput user) {
+    if(userExists(user.getUsername())) {
+      return ResponseEntity.badRequest().build();
+    }
     user.setPassword(passwordEncode.encode(user.getPassword()));
     UserSystem userSave = userSystemService.save(dtoManager.toDomainObject(user));
 
-    return dtoManager.toModel(userSave);
+    return ResponseEntity.status(HttpStatus.CREATED).body(dtoManager.toModel(userSave)); 
   }
 
+  private boolean userExists(String username) {
+    return userSystemService.getUserRepository().findByUsername(username).isPresent();
+  }
 }

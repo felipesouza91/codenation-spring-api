@@ -43,8 +43,8 @@ public class Event {
   @Column(nullable = false)
   private String eventLog;
 
-  @ManyToOne
   @CreatedBy
+  @ManyToOne(optional = false)
   private UserSystem origin;
 
   @CreatedDate
