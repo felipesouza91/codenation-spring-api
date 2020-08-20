@@ -12,6 +12,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,10 +28,15 @@ public class SignUpController {
   @Autowired
   private UserSystemDtoManager dtoManager;
 
+  @Autowired
+  private PasswordEncoder passwordEncode;
+
   @PostMapping
   @ResponseStatus(value = HttpStatus.CREATED)
   public UserSystemDTO create(@RequestBody @Valid UserSystemInput user) {
+    user.setPassword(passwordEncode.encode(user.getPassword()));
     UserSystem userSave = userSystemService.save(dtoManager.toDomainObject(user));
+
     return dtoManager.toModel(userSave);
   }
 

@@ -15,6 +15,9 @@
   <properties>
     <java.version>12</java.version>
     <modelmapper.version>2.3.0</modelmapper.version>
+    <spring-security-oauth2.version>2.3.7.RELEASE</spring-security-oauth2.version>
+    <spring-security-jwt.version>1.0.11.RELEASE</spring-security-jwt.version>
+    <oauth2-oidc-sdk.version>6.21.2</oauth2-oidc-sdk.version>
   </properties>
   <dependencies>
     <dependency>
@@ -61,13 +64,40 @@
       <artifactId>spring-boot-starter-validation</artifactId>
       <scope>compile</scope>
     </dependency>
-
     <dependency>
       <groupId>org.modelmapper</groupId>
       <artifactId>modelmapper</artifactId>
       <version>${modelmapper.version}</version>
     </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-security</artifactId>
+      <scope>compile</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>
+				spring-boot-starter-oauth2-resource-server
+			</artifactId>
+    </dependency>
 
+    <dependency>
+      <groupId>com.nimbusds</groupId>
+      <artifactId>oauth2-oidc-sdk</artifactId>
+      <version>${oauth2-oidc-sdk.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.security</groupId>
+      <artifactId>spring-security-jwt</artifactId>
+      <version>${spring-security-jwt.version}</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.springframework.security.oauth</groupId>
+      <artifactId>spring-security-oauth2</artifactId>
+      <version>${spring-security-oauth2.version}</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>

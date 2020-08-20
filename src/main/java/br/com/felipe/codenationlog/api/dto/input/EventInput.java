@@ -22,10 +22,6 @@ public class EventInput {
   @NotNull
   private String eventLog;
 
-  @Valid
-  @NotNull
-  private UserSystemInputId origin;
-
   @NotNull
   private Integer quantity;
 }
