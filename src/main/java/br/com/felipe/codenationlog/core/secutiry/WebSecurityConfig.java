@@ -21,14 +21,14 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
-  protected void configure(HttpSecurity http) throws Exception {
+  protected void configure(final HttpSecurity http) throws Exception {
     http.authorizeRequests().antMatchers(HttpMethod.POST, "/signup").permitAll().anyRequest().authenticated().and()
         .csrf().disable().cors().and().oauth2ResourceServer().jwt();
   }
 
   @Bean
   public JwtDecoder jwtDecoder() {
-    var secretKey = new SecretKeySpec("$2y$12$GV71H2f2CKqio7Pxcd3vguVJBu4BzWMQ23LC7l1cpKJFLwxYrFMqS".getBytes(),
+    final var secretKey = new SecretKeySpec("$2y$12$GV71H2f2CKqio7Pxcd3vguVJBu4BzWMQ23LC7l1cpKJFLwxYrFMqS".getBytes(),
         "HmacSHA256");
     return NimbusJwtDecoder.withSecretKey(secretKey).build();
   }

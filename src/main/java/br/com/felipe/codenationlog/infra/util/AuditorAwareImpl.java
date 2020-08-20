@@ -24,7 +24,6 @@ public class AuditorAwareImpl implements AuditorAware<UserSystem> {
   @Override
   @Transactional(propagation = Propagation.REQUIRES_NEW)
   public Optional<UserSystem> getCurrentAuditor() {
-    System.out.println(SecurityContextHolder.getContext().getAuthentication().getPrincipal());
     var username = ((Jwt) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getClaim("username")
         .toString();
 
