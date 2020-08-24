@@ -3,6 +3,7 @@ package br.com.felipe.codenationlog.api.dto.input;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import br.com.felipe.codenationlog.domain.model.LogLevel;
 import io.swagger.annotations.ApiParam;
 import lombok.Getter;
 import lombok.Setter;
@@ -18,7 +19,7 @@ public class EventInput {
 
   @NotNull
   @ApiParam(value = "Type of event", example = "INFO")
-  private String level;
+  private LogLevel level;
 
   @NotBlank
   @NotNull
