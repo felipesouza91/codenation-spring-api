@@ -25,9 +25,12 @@ import br.com.felipe.codenationlog.api.dto.model.EventResumeDTO;
 import br.com.felipe.codenationlog.domain.model.Event;
 import br.com.felipe.codenationlog.domain.service.EventService;
 import br.com.felipe.codenationlog.infra.filters.EventFilter;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 
 @RestController
 @RequestMapping("/events")
+@Api(tags = "Events")
 public class EventController {
 
   @Autowired
@@ -38,6 +41,7 @@ public class EventController {
 
   @GetMapping
   @ResponseStatus(value = HttpStatus.OK)
+  @ApiOperation(value = "Find an event")
   public Page<EventResumeDTO> findAll(Pageable pageable, EventFilter filter) {
     Page<Event> pageEvent = eventService.findAll(pageable, filter);
     List<EventResumeDTO> eventDtoList = dtoManager.toCollectionModelResume(pageEvent.getContent());
@@ -46,6 +50,7 @@ public class EventController {
 
   @GetMapping("/{id}")
   @ResponseStatus(value = HttpStatus.OK)
+  @ApiOperation(value = "Find an event by id")
   public EventDTO findOne(@PathVariable Long id) {
     Event eventFind = eventService.findById(id);
     return dtoManager.toModel(eventFind);
@@ -53,6 +58,7 @@ public class EventController {
 
   @PostMapping
   @ResponseStatus(value = HttpStatus.CREATED)
+  @ApiOperation(value = "Save an event")
   public EventDTO save(@RequestBody @Valid EventInput event) {
     Event eventSave = eventService.save(dtoManager.toDomainObject(event));
     return dtoManager.toModel(eventSave);
@@ -60,6 +66,7 @@ public class EventController {
 
   @DeleteMapping("/{id}")
   @ResponseStatus(value = HttpStatus.NO_CONTENT)
+  @ApiOperation(value = "Delete an event")
   public void remove(@PathVariable Long id) {
     this.eventService.remove(id);
   }
